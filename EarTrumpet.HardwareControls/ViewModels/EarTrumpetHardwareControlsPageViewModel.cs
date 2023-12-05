@@ -8,9 +8,23 @@ using EarTrumpet.UI.ViewModels;
 using EarTrumpet.HardwareControls.Interop.Hardware;
 using EarTrumpet.HardwareControls.Views;
 using EarTrumpet.DataModel.Storage;
+using System.Collections.Generic;
+using EarTrumpet.DataModel.WindowsAudio.Internal;
+using System.Linq;
+using System.Windows.Documents;
 
 namespace EarTrumpet.HardwareControls.ViewModels
 {
+    public struct HardwareControlList
+    {
+        public string AudioDevice;
+        public string Command;
+        public string Mode;
+        public string IndexApplicationSelect;
+        public string DeviceType;
+        public string HWConfig;
+    }
+
     public class EarTrumpetHardwareControlsPageViewModel : SettingsPageViewModel
     {
         public enum ItemModificationWays
@@ -27,7 +41,7 @@ namespace EarTrumpet.HardwareControls.ViewModels
         public ItemModificationWays ItemModificationWay { get; set; }
         public int SelectedIndex { get; set; }
 
-        public ObservableCollection<string> HardwareControls
+        public ObservableCollection<HardwareControlList> HardwareControls
         {
             get
             {
@@ -44,7 +58,7 @@ namespace EarTrumpet.HardwareControls.ViewModels
         private WindowHolder _hardwareSettingsWindow;
         private readonly ISettingsBag _settings;
         private DeviceCollectionViewModel _devices;
-        ObservableCollection<String> _commandControlList = new ObservableCollection<string>();
+        ObservableCollection<HardwareControlList> _commandControlList = new ObservableCollection<HardwareControlList>();
 
         public EarTrumpetHardwareControlsPageViewModel() : base(null)
         {
@@ -142,17 +156,27 @@ namespace EarTrumpet.HardwareControls.ViewModels
         {
             var commandControlsList = HardwareManager.Current.GetCommandControlMappings();
 
-            ObservableCollection<String> commandControlsStringList = new ObservableCollection<string>();
+            ObservableCollection<HardwareControlList> commandControlsStringList = new ObservableCollection<HardwareControlList>();
+            HardwareControlList commandControlsString;
 
             foreach (var item in commandControlsList)
             {
-                string commandControlsString =
-                    "Audio Device=" + item.audioDevice +
-                    ", Command=" + item.command +
-                    ", Mode=" + item.mode +
-                    ", Selection=" + item.indexApplicationSelection +
-                    ", Device Type=" + HardwareManager.Current.GetConfigType(item) + ", " +
-                    item.hardwareConfiguration;
+                commandControlsString.AudioDevice = item.audioDevice;
+                commandControlsString.Command = item.command.ToString();
+
+                if (item.command == CommandControlMappingElement.Command.ApplicationVolume || item.command == CommandControlMappingElement.Command.ApplicationMute)
+                {
+                    commandControlsString.Mode = item.mode.ToString();
+                    commandControlsString.IndexApplicationSelect = item.indexApplicationSelection;
+                }
+                else
+                {
+                    commandControlsString.Mode = "";
+                    commandControlsString.IndexApplicationSelect = "";
+                }
+
+                commandControlsString.DeviceType = HardwareManager.Current.GetConfigType(item);
+                commandControlsString.HWConfig = item.hardwareConfiguration.ToString();
 
                 commandControlsStringList.Add(commandControlsString);
             }
