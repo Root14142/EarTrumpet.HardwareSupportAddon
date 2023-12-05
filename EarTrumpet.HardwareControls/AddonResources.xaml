@@ -39,7 +39,8 @@
                           ItemsSource="{Binding HardwareControls}"
                           ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                           SelectedIndex="{Binding SelectedIndex}"
-                          SelectionMode="Single">
+                          SelectionMode="Single"
+                        　Margin="0, 0, 20, 20">
                 <ie:Interaction.Triggers>
                     <ie:EventTrigger EventName="MouseDoubleClick">
                         <ie:InvokeCommandAction Command="{Binding EditSelectedControlCommand}" />
@@ -102,13 +103,25 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
-                    <Label Grid.Row="0" Grid.Column="0" Content="{x:Static resx:Resources.XOffsetText}" HorizontalAlignment="Right" VerticalAlignment="Center"></Label>
+                    <Label Grid.Row="0" Grid.Column="0" Content="{x:Static resx:Resources.XOffsetText}" HorizontalAlignment="Right" VerticalAlignment="Center">
+                        <Label.Foreground>
+                            <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.GrayTextColorKey}}"/>
+                        </Label.Foreground>
+                    </Label>
                     <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding OffsetX, Mode=TwoWay}"></TextBox>
 
-                    <Label Grid.Row="1" Grid.Column="0" Content="{x:Static resx:Resources.YOffsetText}" HorizontalAlignment="Right" VerticalAlignment="Center"></Label>
+                    <Label Grid.Row="1" Grid.Column="0" Content="{x:Static resx:Resources.YOffsetText}" HorizontalAlignment="Right" VerticalAlignment="Center">
+                        <Label.Foreground>
+                            <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.GrayTextColorKey}}"/>
+                        </Label.Foreground>
+                    </Label>
                     <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding OffsetY, Mode=TwoWay}"></TextBox>
 
-                    <Label Grid.Row="2" Grid.Column="0" Content="{x:Static resx:Resources.DisplayTimeText}" HorizontalAlignment="Right" VerticalAlignment="Center"></Label>
+                    <Label Grid.Row="2" Grid.Column="0" Content="{x:Static resx:Resources.DisplayTimeText}" HorizontalAlignment="Right" VerticalAlignment="Center">
+                        <Label.Foreground>
+                            <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.GrayTextColorKey}}"/>
+                        </Label.Foreground>
+                    </Label>
                     <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding DisplayTime, Mode=TwoWay}"></TextBox>
                 </Grid>
             </Grid>
