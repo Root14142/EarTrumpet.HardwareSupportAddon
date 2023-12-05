@@ -1,3 +1,6 @@
+# ※開発中
+## 日本語のリソースファイル追加と一部UIの改善をしています
+
 # EarTrumpet.HardwareSupportAddon
 
 ## Note: This addon is under development and not released yet.
