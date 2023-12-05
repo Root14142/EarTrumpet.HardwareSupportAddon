@@ -1,5 +1,5 @@
 # ※開発中
-## 日本語のリソースファイル追加と一部UIの改善をしています
+日本語のリソースファイル追加と一部UIの改善をしています
 
 # EarTrumpet.HardwareSupportAddon
 
