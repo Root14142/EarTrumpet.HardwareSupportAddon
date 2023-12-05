@@ -6,9 +6,9 @@
         xmlns:resx="clr-namespace:EarTrumpet.HardwareControls.Properties"
         xmlns:b="clr-namespace:EarTrumpet.UI.Behaviors;assembly=EarTrumpet"
         Title="{x:Static resx:Resources.HardwareSettingsText}"
-        Width="341"
-        Height="361.334"
-        mc:Ignorable="d">
+        Width="340"
+        Height="360"
+        mc:Ignorable="d" ResizeMode="NoResize">
     <Window.Resources>
         <Style TargetType="{x:Type ComboBoxItem}" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
             <Setter Property="b:ComboBoxEx.ItemClickEnabled" Value="False" />
