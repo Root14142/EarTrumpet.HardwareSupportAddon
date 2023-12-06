@@ -8,10 +8,12 @@ using EarTrumpet.UI.ViewModels;
 using EarTrumpet.HardwareControls.Interop.Hardware;
 using EarTrumpet.HardwareControls.Views;
 using EarTrumpet.DataModel.Storage;
+using EarTrumpet.HardwareControls.Properties;
 using System.Collections.Generic;
 using EarTrumpet.DataModel.WindowsAudio.Internal;
 using System.Linq;
 using System.Windows.Documents;
+using System.Security.Policy;
 
 namespace EarTrumpet.HardwareControls.ViewModels
 {
@@ -41,7 +43,8 @@ namespace EarTrumpet.HardwareControls.ViewModels
         public ItemModificationWays ItemModificationWay { get; set; }
         public int SelectedIndex { get; set; }
 
-        public ObservableCollection<HardwareControlList> HardwareControls
+        /* public ObservableCollection<HardwareControlList> HardwareControls */
+        public ObservableCollection<string> HardwareControls
         {
             get
             {
@@ -58,7 +61,8 @@ namespace EarTrumpet.HardwareControls.ViewModels
         private WindowHolder _hardwareSettingsWindow;
         private readonly ISettingsBag _settings;
         private DeviceCollectionViewModel _devices;
-        ObservableCollection<HardwareControlList> _commandControlList = new ObservableCollection<HardwareControlList>();
+        /* ObservableCollection<HardwareControlList> _commandControlList = new ObservableCollection<HardwareControlList>(); */
+        ObservableCollection<string> _commandControlList = new ObservableCollection<string>();
 
         public EarTrumpetHardwareControlsPageViewModel() : base(null)
         {
@@ -156,6 +160,42 @@ namespace EarTrumpet.HardwareControls.ViewModels
         {
             var commandControlsList = HardwareManager.Current.GetCommandControlMappings();
 
+            ObservableCollection<String> commandControlsStringList = new ObservableCollection<string>();
+
+            foreach (var item in commandControlsList)
+            {
+                string commandControlsString = Properties.Resources.DeviceText + " = " + item.audioDevice + "\n" +
+                                               Properties.Resources.CommandText + " = ";
+                switch(item.command)
+                {
+                    case CommandControlMappingElement.Command.SystemVolume:
+                        commandControlsString += Properties.Resources.AudioDeviceVolumeText;
+                        break;
+                    case CommandControlMappingElement.Command.SystemMute:
+                        commandControlsString += Properties.Resources.AudioDeviceMuteText;
+                        break;
+                    case CommandControlMappingElement.Command.ApplicationVolume:
+                        commandControlsString += Properties.Resources.ApplicationVolumeText;
+                        break;
+                    case CommandControlMappingElement.Command.ApplicationMute:
+                        commandControlsString += Properties.Resources.ApplicationMuteText;
+                        break;
+                    case CommandControlMappingElement.Command.SetDefaultDevice:
+                        commandControlsString += Properties.Resources.SetAsDefaultDevice;
+                        break;
+                    case CommandControlMappingElement.Command.CycleDefaultDevice:
+                        commandControlsString += Properties.Resources.CycleDefaultDevices;
+                        break;
+                    case CommandControlMappingElement.Command.None:
+                        break;
+                }
+                
+                commandControlsStringList.Add(commandControlsString);
+            }
+
+            /* 
+            var commandControlsList = HardwareManager.Current.GetCommandControlMappings();
+
             ObservableCollection<HardwareControlList> commandControlsStringList = new ObservableCollection<HardwareControlList>();
             HardwareControlList commandControlsString;
 
@@ -179,7 +219,7 @@ namespace EarTrumpet.HardwareControls.ViewModels
                 commandControlsString.HWConfig = item.hardwareConfiguration.ToString();
 
                 commandControlsStringList.Add(commandControlsString);
-            }
+            } */
 
             HardwareControls = commandControlsStringList;
         }

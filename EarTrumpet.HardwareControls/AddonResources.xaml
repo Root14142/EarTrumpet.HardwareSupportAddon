@@ -42,17 +42,6 @@
                           SelectionMode="Single" 
                           ScrollViewer.VerticalScrollBarVisibility="Auto"
                           Margin="0, 0, 20, 20" HorizontalAlignment="Stretch">
-
-                <ctl:ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="{x:Static resx:Resources.DeviceText}" DisplayMemberBinding="{Binding AudioDevice.Length}"/>
-                        <GridViewColumn Header="{x:Static resx:Resources.CommandText}"      DisplayMemberBinding="{Binding Path=Command}"/>
-                        <GridViewColumn Header="{x:Static resx:Resources.ModeText}"         DisplayMemberBinding="{Binding Path=Mode}"/>
-                        <GridViewColumn Header="{x:Static resx:Resources.SelectionText}"    DisplayMemberBinding="{Binding Path=IndexApplicationSelect}"/>
-                        <GridViewColumn Header="{x:Static resx:Resources.DeviceTypeText}"   DisplayMemberBinding="{Binding Path=DeviceType}"/>
-                        <GridViewColumn Header="{x:Static resx:Resources.ControlText}"      DisplayMemberBinding="{Binding Path=HWConfig}"/>
-                    </GridView>
-                </ctl:ListView.View>
                 
                 <ie:Interaction.Triggers>
                     <ie:EventTrigger EventName="MouseDoubleClick">
@@ -62,7 +51,9 @@
                 <!--  here set the itemTemplate to a TextBlock that can wraps  -->
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Path=.}" TextWrapping="Wrap" />
+                        <Border BorderBrush="LightGray" BorderThickness="0,0,0,1">
+                            <TextBlock Text="{Binding Path=.}" TextWrapping="Wrap" />
+                        </Border>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ctl:ListView>
